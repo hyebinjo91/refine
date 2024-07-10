@@ -11,6 +11,7 @@ import { AppIcon } from "@components/app-icon";
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
+import "./styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Refine",
