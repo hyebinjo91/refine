@@ -18,16 +18,16 @@ export default function BlogPostList() {
     syncWithLocation: true,
   });
 
-  const { data: categoryData, isLoading: categoryIsLoading } = useMany({
-    resource: "categories",
-    ids:
-      dataGridProps?.rows
-        ?.map((item: any) => item?.category?.id)
-        .filter(Boolean) ?? [],
-    queryOptions: {
-      enabled: !!dataGridProps?.rows,
-    },
-  });
+  // const { data: categoryData, isLoading: categoryIsLoading } = useMany({
+  //   resource: "categories",
+  //   ids:
+  //     dataGridProps?.rows
+  //       ?.map((item: any) => item?.category?.id)
+  //       .filter(Boolean) ?? [],
+  //   queryOptions: {
+  //     enabled: !!dataGridProps?.rows,
+  //   },
+  // });
 
   const columns = React.useMemo<GridColDef[]>(
     () => [
@@ -62,13 +62,13 @@ export default function BlogPostList() {
           const value = row?.category;
           return value;
         },
-        renderCell: function render({ value }) {
-          return categoryIsLoading ? (
-            <>Loading...</>
-          ) : (
-            categoryData?.data?.find((item) => item.id === value?.id)?.title
-          );
-        },
+        // renderCell: function render({ value }) {
+        //   return categoryIsLoading ? (
+        //     <>Loading...</>
+        //   ) : (
+        //     categoryData?.data?.find((item) => item.id === value?.id)?.title
+        //   );
+        // },
       },
       {
         field: "status",
@@ -103,7 +103,7 @@ export default function BlogPostList() {
         minWidth: 80,
       },
     ],
-    [categoryData]
+    []
   );
 
   return (

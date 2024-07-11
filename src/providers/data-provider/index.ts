@@ -2,14 +2,17 @@
 
 import type { DataProvider } from "@refinedev/core";
 
-const API_URL = "https://api.fake-rest.refine.dev";
+// const API_URL = "https://api.fake-rest.refine.dev";
+const API_URL = "https://partner-api-stg.joongna.com";
 
 const fetcher = async (url: string, options?: RequestInit) =>
   fetch(url, {
     ...options,
     headers: {
       ...options?.headers,
-      Authorization: localStorage.getItem("my_access_token") ?? "",
+      // Authorization: localStorage.getItem("my_access_token") ?? "",
+      Authorization:
+        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIwNzYwMDQ0LCJpYXQiOjE3MjA2NzM2NDQsImp0aSI6ImJhYWViMTk5ZDU0YTRhMmM5OTAzZGIxOTY3ZWU1M2I0IiwidXNlcl9zZXEiOjE0NDYsIm5pY2tuYW1lIjoiXHVjODcwXHVkNjFjXHViZTQ4Iiwic3ViIjoiaHllYmluam85MSIsImlzX3N0YWZmIjp0cnVlLCJhZG1pbl9tZW1iZXJfc2VxIjo1NzUsInJvbGUiOiJNQU5BR0VSIn0.umODzIaYJy5YwGY9A5kYXCytJUQaTdk-_9JGyXSJpVk",
     },
   });
 
@@ -20,14 +23,16 @@ export const dataProvider: DataProvider = {
 
     if (pagination) {
       params.append(
-        "_start",
+        // "_start",
+        "page",
         (
           ((pagination.current ?? 1) - 1) *
           (pagination.pageSize ?? 25)
         ).toString()
       );
       params.append(
-        "_end",
+        // "_end",
+        "pageSize",
         ((pagination.current ?? 1) * (pagination.pageSize ?? 25)).toString()
       );
     }
@@ -47,12 +52,17 @@ export const dataProvider: DataProvider = {
     }
 
     const response = await fetcher(
-      `${API_URL}/${resource}?${params.toString()}`
+      `${API_URL}/api/v2/sellers/list?${params.toString()}`
     );
 
     if (response.status < 200 || response.status > 299) throw response;
 
-    const data = await response.json();
+    const dataRes = await response.json();
+
+    const data = dataRes.data.map((data: any, index: number) => ({
+      ...data,
+      id: index,
+    }));
 
     const total = Number(response.headers.get("x-total-count"));
 
@@ -79,6 +89,7 @@ export const dataProvider: DataProvider = {
     return { data };
   },
   getOne: async ({ resource, id, meta }) => {
+    console.log("getOne", { resource, id, meta });
     const response = await fetcher(`${API_URL}/${resource}/${id}`);
 
     if (response.status < 200 || response.status > 299) throw response;
