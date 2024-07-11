@@ -11,6 +11,7 @@ import { AppIcon } from "@components/app-icon";
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
+import { categoryDataProvider } from "@providers/category-provider";
 import "./styles/globals.css";
 
 export const metadata: Metadata = {
@@ -41,7 +42,10 @@ export default function RootLayout({
                 <DevtoolsProvider>
                   <Refine
                     routerProvider={routerProvider}
-                    dataProvider={dataProvider}
+                    dataProvider={{
+                      default: dataProvider,
+                      categories: categoryDataProvider,
+                    }}
                     notificationProvider={notificationProvider}
                     authProvider={authProvider}
                     resources={[

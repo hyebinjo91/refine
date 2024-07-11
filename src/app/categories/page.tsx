@@ -11,7 +11,7 @@ import {
 import React from "react";
 
 export default function CategoryList() {
-  const { dataGridProps } = useDataGrid({});
+  const { dataGridProps } = useDataGrid({ dataProviderName: "categories" });
 
   const columns = React.useMemo<GridColDef[]>(
     () => [

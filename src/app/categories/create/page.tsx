@@ -10,7 +10,7 @@ export default function CategoryCreate() {
     refineCore: { formLoading },
     register,
     formState: { errors },
-  } = useForm({});
+  } = useForm({ refineCoreProps: { dataProviderName: "categories" } });
 
   return (
     <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>

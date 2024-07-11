@@ -9,7 +9,7 @@ export default function CategoryEdit() {
     saveButtonProps,
     register,
     formState: { errors },
-  } = useForm({});
+  } = useForm({ refineCoreProps: { dataProviderName: "categories" } });
 
   return (
     <Edit saveButtonProps={saveButtonProps}>

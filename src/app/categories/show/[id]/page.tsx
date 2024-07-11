@@ -5,7 +5,7 @@ import { useShow } from "@refinedev/core";
 import { Show, TextFieldComponent as TextField } from "@refinedev/mui";
 
 export default function CategoryShow() {
-  const { queryResult } = useShow({});
+  const { queryResult } = useShow({ dataProviderName: "categories" });
   const { data, isLoading } = queryResult;
 
   const record = data?.data;
